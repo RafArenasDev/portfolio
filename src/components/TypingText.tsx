@@ -5,19 +5,16 @@ interface TypingTextProps {
   className?: string
 }
 
-const prefersReducedMotion =
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
 const TYPE_SPEED_MS = 55
 const DELETE_SPEED_MS = 30
 const HOLD_MS = 1600
 
 export function TypingText({ lines, className = '' }: TypingTextProps) {
   const [lineIndex, setLineIndex] = useState(0)
-  const [text, setText] = useState(prefersReducedMotion ? lines[0] : '')
+  const [text, setText] = useState('')
 
   useEffect(() => {
-    if (prefersReducedMotion || lines.length === 0) return
+    if (lines.length === 0) return
 
     const currentLine = lines[lineIndex % lines.length]
     let timeout: number

@@ -17,8 +17,8 @@ function ProjectRow({ project }: { project: Translations['projects']['items'][nu
         {'d----      '}
         {date.padEnd(10)}
         {'  '}
-        {time.padEnd(11)}
-        {' '.repeat(18)}
+        {time.padEnd(5)}
+        {' '.repeat(24)}
         <span className="font-bold text-(--color-accent-strong) group-hover:text-(--color-accent) group-hover:underline">
           {project.name}/
         </span>

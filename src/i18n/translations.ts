@@ -179,17 +179,17 @@ export const translations: Record<Locale, Translations> = {
       heading: '$ cat education.yaml',
       command: 'cat education.yaml',
       path: '~/rafael/education.yaml',
-      academicTitle: 'educación_formal:',
+      academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Ingeniería de Sistemas', date: '2026-08' },
         { institution: 'SENA', title: 'Tecnología en Análisis y Desarrollo de Sistemas de Información', date: '2023-08' },
       ],
-      certTitle: 'certificaciones:',
+      certTitle: 'certifications:',
       certs: [
         { institution: 'Cisco Networking Academy', title: 'Hacker Ético', date: '2026-01' },
         { institution: 'Cisco Networking Academy', title: 'CyberOps Associate', date: '2026-01' },
       ],
-      profileTitle: 'perfil_blando:',
+      profileTitle: 'soft_skills:',
       softSkills: [
         'Resolución de problemas y pensamiento analítico',
         'Trabajo en equipo y colaboración multidisciplinaria',
@@ -197,7 +197,7 @@ export const translations: Record<Locale, Translations> = {
         'Adaptabilidad y gestión del cambio',
         'Aprendizaje continuo y autodesarrollo',
       ],
-      languagesLabel: 'idiomas:',
+      languagesLabel: 'languages:',
       languages: 'Español (nativo) · Inglés (B1)',
     },
     projects: {
@@ -344,7 +344,7 @@ export const translations: Record<Locale, Translations> = {
         { institution: 'Cisco Networking Academy', title: 'Ethical Hacking', date: '2026-01' },
         { institution: 'Cisco Networking Academy', title: 'CyberOps Associate', date: '2026-01' },
       ],
-      profileTitle: 'soft_profile:',
+      profileTitle: 'soft_skills:',
       softSkills: [
         'Problem-solving and analytical thinking',
         'Teamwork and multidisciplinary collaboration',

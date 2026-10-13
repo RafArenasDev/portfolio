@@ -22,6 +22,6 @@ export function formatSize(sizeKb: number): string {
 export function formatPwshDateTime(iso: string): { date: string; time: string } {
   const d = new Date(iso)
   const date = new Intl.DateTimeFormat('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(d)
-  const time = new Intl.DateTimeFormat('es-CO', { hour: 'numeric', minute: '2-digit', hour12: true }).format(d)
+  const time = new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit', hour12: false }).format(d)
   return { date, time }
 }

@@ -10,10 +10,10 @@ interface TerminalWindowProps {
 export function TerminalWindow({ title, active = false, children, className = '' }: TerminalWindowProps) {
   return (
     <div
-      className={`rounded-xl border bg-(--color-bg) transition-[border-color,box-shadow] duration-500 ${
+      className={`rounded-xl border bg-(--color-bg) transition-[filter,opacity,border-color,box-shadow] duration-500 ease-out ${
         active
-          ? 'border-(--color-accent) shadow-[0_0_50px_-10px_rgba(56,189,248,0.55)]'
-          : 'border-(--color-border) shadow-[0_0_40px_-18px_rgba(56,189,248,0.2)]'
+          ? 'border-(--color-accent) opacity-100 shadow-[0_0_50px_-10px_rgba(56,189,248,0.55)] [filter:none]'
+          : 'border-(--color-border) opacity-80 shadow-[0_0_40px_-18px_rgba(56,189,248,0.2)] [filter:blur(1.5px)_brightness(0.6)]'
       } ${className}`}
     >
       <div className="relative flex items-center border-b border-(--color-border) px-4 py-2">

@@ -41,6 +41,10 @@ body {
   color: #fff;
 }
 
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

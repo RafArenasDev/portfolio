@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import photo from '../assets/photo.jpg'
+import avatar from '../assets/avatar.png'
 
 const CHARS = [' ', '.', ':', '-', '=', '+', '*', '#', '%', '█']
 const COLS = 64
@@ -11,8 +11,8 @@ interface Cell {
 }
 
 /**
- * Real photo rendered as ASCII/block-character art (neofetch-style), with
- * autoplay crossfade to the plain photo every few seconds, and an instant
+ * Avatar rendered as ASCII/block-character art (neofetch-style), with an
+ * autoplay crossfade to the plain image every few seconds, and an instant
  * reveal on hover.
  */
 export function BitPortrait({ className = '' }: { className?: string }) {
@@ -22,7 +22,7 @@ export function BitPortrait({ className = '' }: { className?: string }) {
 
   useEffect(() => {
     const img = new Image()
-    img.src = photo
+    img.src = avatar
     img.onload = () => {
       const rows = Math.round((img.height / img.width) * COLS * CHAR_ASPECT)
       const sample = document.createElement('canvas')
@@ -41,13 +41,22 @@ export function BitPortrait({ className = '' }: { className?: string }) {
           const r = data[idx]
           const g = data[idx + 1]
           const b = data[idx + 2]
-          const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+          const alpha = data[idx + 3] / 255
+          const rawLuminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+          // fade toward "blank" as the pixel becomes transparent
+          const luminance = rawLuminance * alpha + 1 * (1 - alpha)
+
+          if (alpha < 0.12) {
+            row.push({ ch: ' ', color: 'transparent' })
+            continue
+          }
+
           const level = Math.min(CHARS.length - 1, Math.floor((1 - luminance) * CHARS.length))
           const brightness = Math.min(1, (1 - luminance) * 1.2 + 0.15)
           const blueChannel = Math.round(170 + brightness * 70)
           row.push({
             ch: CHARS[level],
-            color: `rgba(56, 189, ${blueChannel}, ${0.35 + brightness * 0.65})`,
+            color: `rgba(56, 189, ${blueChannel}, ${(0.35 + brightness * 0.65) * alpha})`,
           })
         }
         next.push(row)
@@ -68,7 +77,7 @@ export function BitPortrait({ className = '' }: { className?: string }) {
       role="img"
       aria-label="Rafael Arenas"
       className={`relative w-full select-none ${className}`}
-      style={{ aspectRatio: '480 / 425' }}
+      style={{ aspectRatio: '560 / 448' }}
       onMouseEnter={() => {
         hovered.current = true
         setMode('plain')
@@ -94,10 +103,10 @@ export function BitPortrait({ className = '' }: { className?: string }) {
         ))}
       </div>
       <img
-        src={photo}
+        src={avatar}
         alt=""
         aria-hidden={mode !== 'plain'}
-        className="absolute inset-0 h-full w-full object-cover grayscale transition-opacity duration-700"
+        className="absolute inset-0 h-full w-full object-contain transition-opacity duration-700"
         style={{ opacity: mode === 'plain' ? 1 : 0 }}
       />
     </div>

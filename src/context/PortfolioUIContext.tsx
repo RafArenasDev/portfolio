@@ -4,7 +4,7 @@ import { useScrollSpy } from '../hooks/useScrollSpy'
 export const SECTION_IDS = ['whoami', 'stack', 'experience', 'education', 'projects', 'connect'] as const
 export type SectionId = (typeof SECTION_IDS)[number]
 
-interface PendingCommand {
+export interface PendingCommand {
   command: string
   targetId: SectionId
 }
@@ -13,7 +13,7 @@ interface PortfolioUIValue {
   activeSection: string
   pendingCommand: PendingCommand | null
   runCommand: (targetId: SectionId, command: string) => void
-  clearCommand: () => void
+  clearCommand: (which: PendingCommand) => void
 }
 
 const PortfolioUIContext = createContext<PortfolioUIValue | null>(null)
@@ -23,10 +23,17 @@ export function PortfolioUIProvider({ children }: { children: ReactNode }) {
   const [pendingCommand, setPendingCommand] = useState<PendingCommand | null>(null)
 
   const runCommand = useCallback((targetId: SectionId, command: string) => {
-    setPendingCommand({ targetId, command })
+    const next = { targetId, command }
+    setPendingCommand(next)
+    // scroll immediately so the command types inside the terminal you land on,
+    // the same way a real shell command happens in the window you're looking at
+    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
-  const clearCommand = useCallback(() => setPendingCommand(null), [])
+  // guards against a second nav click clobbering a pending clear from the first
+  const clearCommand = useCallback((which: PendingCommand) => {
+    setPendingCommand((current) => (current === which ? null : current))
+  }, [])
 
   const value = useMemo(
     () => ({ activeSection, pendingCommand, runCommand, clearCommand }),
@@ -41,3 +48,5 @@ export function usePortfolioUI() {
   if (!ctx) throw new Error('usePortfolioUI must be used within PortfolioUIProvider')
   return ctx
 }
+
+export type { PortfolioUIValue }

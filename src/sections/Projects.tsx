@@ -1,4 +1,4 @@
-import { PromptLine } from '../components/PromptBar'
+import { CommandBlock } from '../components/CommandBlock'
 import { Reveal } from '../components/Reveal'
 import { TerminalWindow } from '../components/TerminalWindow'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
@@ -42,17 +42,17 @@ export function Projects() {
     <section id="projects" className="mx-auto max-w-5xl px-5 py-8">
       <Reveal>
         <TerminalWindow title="rafael — zsh — ~/projects" active={activeSection === 'projects'}>
-          <PromptLine path={p.path} command={p.command} />
+          <CommandBlock sectionId="projects" path={p.path} command={p.command}>
+            <p className="text-(--color-text-dim)">{'    '}Directorio: {p.path}</p>
+            <p className="mt-2 text-(--color-text-faint)">Mode                LastWriteTime         Length Name</p>
+            <p className="text-(--color-text-faint)">----                -------------         ------ ----</p>
 
-          <p className="text-(--color-text-dim)">{'    '}Directorio: {p.path}</p>
-          <p className="mt-2 text-(--color-text-faint)">Mode                LastWriteTime         Length Name</p>
-          <p className="text-(--color-text-faint)">----                -------------         ------ ----</p>
-
-          <div className="mt-1.5 space-y-3.5">
-            {p.items.map((project) => (
-              <ProjectRow key={project.slug} project={project} />
-            ))}
-          </div>
+            <div className="mt-1.5 space-y-3.5">
+              {p.items.map((project) => (
+                <ProjectRow key={project.slug} project={project} />
+              ))}
+            </div>
+          </CommandBlock>
         </TerminalWindow>
       </Reveal>
     </section>

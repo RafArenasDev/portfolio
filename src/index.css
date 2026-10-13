@@ -45,6 +45,21 @@ section[id] {
   scroll-margin-top: 6rem;
 }
 
+@keyframes command-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-command-reveal {
+  animation: command-reveal 0.35s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react'
 import { usePortfolioUI, type PendingCommand, type SectionId } from '../context/PortfolioUIContext'
 
-const HOLD_AFTER_TYPE_MS = 320
-
 export function useCommandReplay(sectionId: SectionId) {
   const { pendingCommand, clearCommand } = usePortfolioUI()
-  const [phase, setPhase] = useState<'idle' | 'loading'>('idle')
+  const [revealed, setRevealed] = useState(true)
 
   const isTarget = pendingCommand?.targetId === sectionId
   const replayKey = isTarget ? pendingCommand : undefined
 
   useEffect(() => {
-    // content clears the instant this section becomes the target, in sync
-    // with the command retyping, so nothing "already loaded" sits behind it
-    if (isTarget) setPhase('loading')
+    // hide output the instant this section becomes the target, in sync with
+    // the command retyping — there's nothing to show until it "runs"
+    if (isTarget) setRevealed(false)
   }, [isTarget, pendingCommand])
 
   const handleTypedDone = (command: PendingCommand) => {
-    window.setTimeout(() => {
-      setPhase('idle')
-      clearCommand(command)
-    }, HOLD_AFTER_TYPE_MS)
+    // a real shell prints output the instant the command finishes — no spinner
+    setRevealed(true)
+    clearCommand(command)
   }
 
-  return { replayKey, phase, handleTypedDone }
+  return { replayKey, revealed, handleTypedDone }
 }

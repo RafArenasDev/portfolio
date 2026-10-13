@@ -20,29 +20,26 @@ export function Hero() {
               <BitPortrait className="mx-auto w-[300px] sm:mx-0 sm:w-[360px]" />
 
               <div className="space-y-1.5 text-[12.5px] sm:self-center sm:text-[13px]">
-                <p className="font-mono text-lg font-bold text-(--color-accent) sm:text-xl">
-                  {h.name}
-                  <span className="text-(--color-text-faint)">@portfolio</span>
-                </p>
+                <p className="font-mono text-lg font-bold text-(--color-accent) sm:text-xl">{h.name}</p>
                 <p className="min-h-[1.3em] font-semibold text-(--color-accent-strong)">
                   <TypingText lines={[h.role]} />
                 </p>
                 <p className="text-(--color-text-faint)">------------------------</p>
 
                 <p>
-                  <span className="text-(--color-accent-strong)">Host: </span>
+                  <span className="text-(--color-accent-strong)">Location: </span>
                   <span className="text-(--color-text)">{h.location}</span>
                 </p>
                 <p>
-                  <span className="text-(--color-accent-strong)">Uptime: </span>
+                  <span className="text-(--color-accent-strong)">Experience: </span>
                   <span className="text-(--color-text)">{h.experienceValue}</span>
                 </p>
                 <p>
-                  <span className="text-(--color-accent-strong)">Shell: </span>
+                  <span className="text-(--color-accent-strong)">Stack: </span>
                   <span className="text-(--color-text)">{h.fullstackValue}</span>
                 </p>
                 <p>
-                  <span className="text-(--color-accent-strong)">Goal: </span>
+                  <span className="text-(--color-accent-strong)">Mission: </span>
                   <span className="text-(--color-text)">{h.missionValue}</span>
                 </p>
                 <p>

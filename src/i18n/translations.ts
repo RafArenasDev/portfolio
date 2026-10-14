@@ -24,16 +24,12 @@ export interface Translations {
   }
   stack: {
     title: string
-    heading: string
     command: string
     path: string
     groups: {
-      title: string
-      icons: string
-      items: string
-      level: number
+      folder: string
+      files: { name: string; icon: string }[]
     }[]
-    status: string
   }
   experience: {
     title: string
@@ -112,16 +108,48 @@ export const translations: Record<Locale, Translations> = {
     },
     stack: {
       title: 'Stack Tecnológico',
-      heading: '$ cat tech-stack.yaml',
-      command: 'cat tech-stack.yaml',
-      path: '~/rafarenasdev/tech-stack.yaml',
+      command: 'tree tech-stack/ -L 2',
+      path: '~/rafarenasdev/tech-stack',
       groups: [
-        { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
-        { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
-        { title: 'databases:', icons: 'postgres,sqlite', items: 'PostgreSQL · SQL Server · SQLite', level: 8 },
-        { title: 'devops_tools:', icons: 'git,docker,githubactions,vite', items: 'Git · Docker · GitHub Actions · Vite · Deployments & administración de servidores', level: 7 },
+        {
+          folder: 'frontend_mobile/',
+          files: [
+            { name: 'react.tsx', icon: 'react' },
+            { name: 'angular.ts', icon: 'angular' },
+            { name: 'flutter.dart', icon: 'flutter' },
+            { name: 'typescript.ts', icon: 'ts' },
+            { name: 'javascript.js', icon: 'js' },
+          ],
+        },
+        {
+          folder: 'backend/',
+          files: [
+            { name: 'node.js', icon: 'nodejs' },
+            { name: 'laravel.php', icon: 'laravel' },
+            { name: 'zend.php', icon: 'php' },
+            { name: 'python.py', icon: 'python' },
+            { name: 'csharp.cs', icon: 'cs' },
+            { name: 'java.java', icon: 'java' },
+          ],
+        },
+        {
+          folder: 'databases/',
+          files: [
+            { name: 'postgres.sql', icon: 'postgres' },
+            { name: 'sqlserver.sql', icon: '' },
+            { name: 'sqlite.db', icon: 'sqlite' },
+          ],
+        },
+        {
+          folder: 'devops_tools/',
+          files: [
+            { name: 'git', icon: 'git' },
+            { name: 'docker', icon: 'docker' },
+            { name: 'deploy.yml', icon: 'githubactions' },
+            { name: 'vite.config.js', icon: 'vite' },
+          ],
+        },
       ],
-      status: 'status: ready   ·   environment: production',
     },
     experience: {
       title: 'Experiencia',
@@ -264,16 +292,48 @@ export const translations: Record<Locale, Translations> = {
     },
     stack: {
       title: 'Tech Stack',
-      heading: '$ cat tech-stack.yaml',
-      command: 'cat tech-stack.yaml',
-      path: '~/rafarenasdev/tech-stack.yaml',
+      command: 'tree tech-stack/ -L 2',
+      path: '~/rafarenasdev/tech-stack',
       groups: [
-        { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
-        { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
-        { title: 'databases:', icons: 'postgres,sqlite', items: 'PostgreSQL · SQL Server · SQLite', level: 8 },
-        { title: 'devops_tools:', icons: 'git,docker,githubactions,vite', items: 'Git · Docker · GitHub Actions · Vite · Server deployments & administration', level: 7 },
+        {
+          folder: 'frontend_mobile/',
+          files: [
+            { name: 'react.tsx', icon: 'react' },
+            { name: 'angular.ts', icon: 'angular' },
+            { name: 'flutter.dart', icon: 'flutter' },
+            { name: 'typescript.ts', icon: 'ts' },
+            { name: 'javascript.js', icon: 'js' },
+          ],
+        },
+        {
+          folder: 'backend/',
+          files: [
+            { name: 'node.js', icon: 'nodejs' },
+            { name: 'laravel.php', icon: 'laravel' },
+            { name: 'zend.php', icon: 'php' },
+            { name: 'python.py', icon: 'python' },
+            { name: 'csharp.cs', icon: 'cs' },
+            { name: 'java.java', icon: 'java' },
+          ],
+        },
+        {
+          folder: 'databases/',
+          files: [
+            { name: 'postgres.sql', icon: 'postgres' },
+            { name: 'sqlserver.sql', icon: '' },
+            { name: 'sqlite.db', icon: 'sqlite' },
+          ],
+        },
+        {
+          folder: 'devops_tools/',
+          files: [
+            { name: 'git', icon: 'git' },
+            { name: 'docker', icon: 'docker' },
+            { name: 'deploy.yml', icon: 'githubactions' },
+            { name: 'vite.config.js', icon: 'vite' },
+          ],
+        },
       ],
-      status: 'status: ready   ·   environment: production',
     },
     experience: {
       title: 'Experience',

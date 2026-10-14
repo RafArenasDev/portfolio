@@ -19,25 +19,35 @@ function ProjectNode({
   const { date } = formatPwshDateTime(meta.pushedAt)
   const branch = isLast ? '└── ' : '├── '
   const guide = isLast ? '    ' : '│   '
+  const url = `https://github.com/${project.repo}`
 
   return (
-    <a href={`https://github.com/${project.repo}`} target="_blank" rel="noreferrer" className="group block">
-      <p className="whitespace-pre">
+    <div className="whitespace-pre">
+      <p>
         <span className="text-(--color-text-faint)">{branch}</span>
-        <span className="font-bold text-(--color-accent-strong) group-hover:text-(--color-accent) group-hover:underline">
-          {project.name}/
-        </span>
+        <span className="font-bold text-(--color-accent-strong)">{project.name}/</span>
       </p>
-      <p className="whitespace-pre text-[12px] text-(--color-text-dim)">
-        <span className="text-(--color-text-faint)">{guide}├── </span>
+      <p className="text-[12px] text-(--color-text-dim)">
+        <span className="text-(--color-text-faint)">{guide}├── stack: </span>
         {project.stack}
       </p>
-      <p className="whitespace-pre text-[12px] text-(--color-text-dim)">
-        <span className="text-(--color-text-faint)">{guide}└── </span>
+      <p className="text-[12px] text-(--color-text-dim)">
+        <span className="text-(--color-text-faint)">{guide}├── # </span>
         {project.description}
       </p>
+      <p className="text-[12px]">
+        <span className="text-(--color-text-faint)">{guide}└── preview: </span>
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className="text-(--color-accent-strong) underline decoration-(--color-border-strong) underline-offset-2 hover:text-(--color-accent) hover:decoration-(--color-accent)"
+        >
+          {url}
+        </a>
+      </p>
       <p className="pl-[3ch] text-[11px] text-(--color-text-faint)">updated {date}</p>
-    </a>
+    </div>
   )
 }
 
@@ -50,15 +60,13 @@ export function Projects() {
     <section id="projects" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={5} title={p.title} />
       <Reveal>
-        <TerminalWindow title="rafarenasdev — zsh — ~/projects" active={activeSection === 'projects'}>
+        <TerminalWindow title={p.title} active={activeSection === 'projects'}>
           <CommandBlock sectionId="projects" path={p.path} command={p.command}>
             <p className="text-(--color-text)">projects/</p>
-            <div className="space-y-2">
-              {p.items.map((project, i) => (
-                <ProjectNode key={project.slug} project={project} isLast={i === p.items.length - 1} />
-              ))}
-            </div>
-            <p className="mt-3 border-t border-(--color-border) pt-3 text-[11px] text-(--color-text-faint)">
+            {p.items.map((project, i) => (
+              <ProjectNode key={project.slug} project={project} isLast={i === p.items.length - 1} />
+            ))}
+            <p className="mt-1 border-t border-(--color-border) pt-3 text-[11px] text-(--color-text-faint)">
               {p.items.length} {p.totalLabel}
             </p>
           </CommandBlock>

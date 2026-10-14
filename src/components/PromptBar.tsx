@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 function useClock() {
   const [now, setNow] = useState(() => new Date())
@@ -13,19 +13,21 @@ function pad(n: number) {
   return String(n).padStart(2, '0')
 }
 
-/** One oh-my-posh "atomic"-style segment: flat rectangle, rounded cap only at the group's outer edge, a sharp powerline arrow pointing into the next segment. */
+/** One oh-my-posh "atomic"-style segment: flat rectangle, rounded cap only at the group's outer edge, a sharp powerline triangle tying it to its neighbor. */
 function Segment({
   bg,
   fg,
   text,
   first = false,
   last = false,
+  tail = 'none',
 }: {
   bg: string
   fg: string
-  text: string
+  text: ReactNode
   first?: boolean
   last?: boolean
+  tail?: 'none' | 'right' | 'left'
 }) {
   return (
     <div
@@ -34,8 +36,14 @@ function Segment({
       } ${last ? 'rounded-r-full pr-4' : ''}`}
       style={{ background: bg, color: fg }}
     >
+      {tail === 'left' && (
+        <span
+          className="absolute -left-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-r-[7px]"
+          style={{ borderRightColor: bg }}
+        />
+      )}
       {text}
-      {!last && (
+      {tail === 'right' && (
         <span
           className="absolute -right-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-l-[7px]"
           style={{ borderLeftColor: bg }}
@@ -45,26 +53,33 @@ function Segment({
   )
 }
 
-const TYPE_SPEED_MS = 85
+function AppleMark() {
+  return (
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true">
+      <path d="M16.37 1.43c0 1.14-.46 2.1-1.18 2.84-.8.83-2.1 1.46-3.1 1.38-.12-1.1.46-2.25 1.17-2.96.79-.8 2.17-1.4 3.1-1.26ZM20.9 17.55c-.5 1.15-.74 1.66-1.38 2.68-.9 1.43-2.16 3.21-3.74 3.22-1.4.02-1.76-.92-3.66-.91-1.9.01-2.3.93-3.7.92-1.58-.01-2.78-1.62-3.68-3.05C2.54 17.3 1.9 12.5 3.6 9.5c.9-1.6 2.5-2.6 4.2-2.63 1.4-.02 2.73.95 3.6.95.86 0 2.47-1.17 4.17-1 .7.03 2.7.28 3.98 2.1-.1.06-2.37 1.38-2.35 4.12.03 3.27 2.86 4.36 2.9 4.38Z" />
+    </svg>
+  )
+}
+
+const TYPE_SPEED_MS = 110
 
 interface PromptLineProps {
   path: string
-  command: string
-  /** increments to (re)play the typing animation; 0 (or omitted) renders the command statically */
+  /** increments to (re)play the typing animation; omit/0 keeps the terminal blank, exactly like one never run yet */
   bootToken?: number
   onTypedDone?: () => void
+  command: string
 }
 
 /**
- * Two-line shell prompt styled after the Oh My Posh "atomic" theme:
- * segment row (shell / path / exec time, date right-aligned) then the
- * continuation line with the actual command, mirroring a real pwsh prompt.
- * Each time `bootToken` increments, the command (re)types itself character
- * by character, exactly like a command entered live in that terminal.
+ * Two-line shell prompt styled after the Oh My Posh "atomic" theme: a
+ * left-aligned user/path segment pair, a right-aligned OS-mark/date pair,
+ * then the continuation line with the actual command. The terminal stays
+ * visually blank — no command text at all — until `bootToken` first fires.
  */
 export function PromptLine({ path, command, bootToken, onTypedDone }: PromptLineProps) {
   const now = useClock()
-  const [typed, setTyped] = useState(bootToken ? '' : command)
+  const [typed, setTyped] = useState('')
   const [typing, setTyping] = useState(false)
 
   useEffect(() => {
@@ -85,21 +100,23 @@ export function PromptLine({ path, command, bootToken, onTypedDone }: PromptLine
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bootToken])
 
-  const execMs = Math.max(6, command.length * 6)
   const dateLabel = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}, ${pad(now.getHours())}:${pad(now.getMinutes())}`
+
+  if (!bootToken) {
+    return <div className="mb-4 h-[52px]" aria-hidden />
+  }
 
   return (
     <div className="mb-4 select-text">
       <div className="flex flex-wrap items-center justify-between gap-y-1">
         <div className="flex">
-          <span className="mr-1 font-mono text-[13px] text-(--color-text-faint)">╭─</span>
-          <Segment bg="#0077c2" fg="#ffffff" text=" rafarenasdev " first />
-          <Segment bg="#ff9248" fg="#2a2a2a" text={` ${path} `} />
-          <Segment bg="#83769c" fg="#ffffff" text={` ${execMs}ms `} last />
+          <Segment bg="#0077c2" fg="#ffffff" text=" rafarenasdev " first tail="right" />
+          <Segment bg="#ff9248" fg="#2a2a2a" text={` ${path} `} last />
         </div>
-        <span className="pl-2 font-mono text-[11px] font-semibold" style={{ color: '#40c4ff' }}>
-          {dateLabel}
-        </span>
+        <div className="flex">
+          <Segment bg="#0077c2" fg="#ffffff" text={<AppleMark />} first />
+          <Segment bg="#8ecbf2" fg="#0a2f4a" text={` ${dateLabel} `} last tail="left" />
+        </div>
       </div>
       <div className="mt-1 font-mono text-[13px] sm:text-sm">
         <span className="text-(--color-text-faint)">╰─ </span>

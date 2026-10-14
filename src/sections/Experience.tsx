@@ -1,5 +1,6 @@
-import { PromptLine } from '../components/PromptBar'
+import { CommandBlock } from '../components/CommandBlock'
 import { Reveal } from '../components/Reveal'
+import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
@@ -11,13 +12,15 @@ export function Experience() {
 
   return (
     <section id="experience" className="mx-auto max-w-5xl px-5 py-8">
+      <SectionHeading index={3} title={e.title} />
       <Reveal>
-        <TerminalWindow title="rafael — zsh — ~/experience" active={activeSection === 'experience'}>
-          <PromptLine path={e.path} command={e.command} />
-
-          <div className="space-y-5">
+        <TerminalWindow path={e.path} active={activeSection === 'experience'}>
+          <CommandBlock sectionId="experience" path={e.path} command={e.command}>
             {e.jobs.map((job, i) => (
-              <div key={`${job.company}-${job.role}`} className={i > 0 ? 'border-t border-(--color-border) pt-5' : ''}>
+              <div
+                key={`${job.company}-${job.role}`}
+                className={i > 0 ? 'mt-5 border-t border-(--color-border) pt-5' : ''}
+              >
                 <p className="text-(--color-text-faint)">
                   [<span className="text-(--color-accent-strong)">{job.period}</span>]{' '}
                   <span className="text-(--color-text)">{job.company}</span>{' '}
@@ -34,7 +37,7 @@ export function Experience() {
                 </ul>
               </div>
             ))}
-          </div>
+          </CommandBlock>
         </TerminalWindow>
       </Reveal>
     </section>

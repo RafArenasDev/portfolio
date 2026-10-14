@@ -1,39 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+const REFERENCE_LINE_PX = 140
+
+/** Picks the section whose top has most recently crossed the reference line below the sticky nav. */
 export function useScrollSpy(ids: string[]): string {
   const [activeId, setActiveId] = useState(ids[0] ?? '')
+  const idsKey = ids.join(',')
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null)
-
     if (elements.length === 0) return
 
-    const ratios = new Map<string, number>()
+    const compute = () => {
+      let best = elements[0]
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= REFERENCE_LINE_PX) best = el
+      }
+      setActiveId(best.id)
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          ratios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0)
-        }
-        let bestId = activeId
-        let bestRatio = 0
-        for (const [id, ratio] of ratios) {
-          if (ratio > bestRatio) {
-            bestRatio = ratio
-            bestId = id
-          }
-        }
-        if (bestRatio > 0) setActiveId(bestId)
-      },
-      { threshold: [0.1, 0.25, 0.5, 0.75, 1] },
-    )
+    const onScroll = () => {
+      if (rafRef.current !== null) return
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null
+        compute()
+      })
+    }
 
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
+    compute()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ids.join(',')])
+  }, [idsKey])
 
   return activeId
 }

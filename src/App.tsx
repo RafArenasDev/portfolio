@@ -1,4 +1,3 @@
-import { CommandOverlay } from './components/CommandOverlay'
 import { Nav } from './components/Nav'
 import { PortfolioUIProvider } from './context/PortfolioUIContext'
 import { LocaleProvider } from './i18n/LocaleContext'
@@ -23,7 +22,6 @@ function App() {
             <Projects />
             <Contact />
           </main>
-          <CommandOverlay />
         </div>
       </PortfolioUIProvider>
     </LocaleProvider>

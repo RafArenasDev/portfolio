@@ -10,38 +10,35 @@ export interface Translations {
     connect: string
   }
   hero: {
-    shellLabel: string
-    promptLabel: string
+    title: string
     command: string
+    path: string
     name: string
     role: string
-    contextLabel: string
-    location: string
-    experienceLabel: string
+    origin: string
     experienceValue: string
-    missionLabel: string
-    missionValue: string
-    summaryLabel: string
-    summary: string
-    lsCommand: string
-    fullstackLabel: string
-    fullstackValue: string
-    neofetchCommand: string
+    focus: string
+    stackFrontend: string
+    stackBackend: string
+    stackMobile: string
+    stackDatabase: string
     certsLine: string
+    contactLinkedin: string
+    contactGithub: string
+    contactEmail: string
+    contactTimezone: string
   }
   stack: {
-    heading: string
+    title: string
     command: string
     path: string
     groups: {
-      title: string
-      icons: string
-      items: string
-      level: number
+      folder: string
+      files: { name: string; icon: string }[]
     }[]
-    status: string
   }
   experience: {
+    title: string
     heading: string
     command: string
     path: string
@@ -53,6 +50,7 @@ export interface Translations {
     }[]
   }
   education: {
+    title: string
     heading: string
     command: string
     path: string
@@ -66,6 +64,7 @@ export interface Translations {
     languages: string
   }
   projects: {
+    title: string
     heading: string
     command: string
     path: string
@@ -80,6 +79,7 @@ export interface Translations {
     }[]
   }
   contact: {
+    title: string
     heading: string
     command: string
     path: string
@@ -100,42 +100,74 @@ export const translations: Record<Locale, Translations> = {
       connect: 'connect',
     },
     hero: {
-      shellLabel: 'rafarenasdev  ·  portfolio shell  ·  online',
-      promptLabel: '❯ whoami',
+      title: 'Perfil',
       command: 'whoami',
-      name: 'rafael_arenas',
+      path: '~/profile',
+      name: 'Rafael Arenas',
       role: 'Full Stack Developer',
-      contextLabel: 'context:',
-      location: 'Dosquebradas, Risaralda, Colombia',
-      experienceLabel: 'experience:',
+      origin: 'Dosquebradas, Risaralda, Colombia',
       experienceValue: '3+ años de experiencia profesional en desarrollo de software',
-      missionLabel: 'mission:',
-      missionValue: 'construir productos seguros, escalables y listos para producción',
-      summaryLabel: '❯ cat profile.md',
-      summary:
-        'Ingeniero de Sistemas y Desarrollador Fullstack con más de 3 años de experiencia en desarrollo de software y soporte técnico de nivel empresarial. Experiencia comprobada en tecnologías frontend y backend (React, Angular, Node.js, PHP, Laravel, Python, C#, Java), desarrollo móvil con Flutter, administración de bases de datos relacionales (PostgreSQL, SQL Server, SQLite) y gestión de incidentes críticos con SLA en entornos de producción.',
-      lsCommand: '❯ ls -la expertise/',
-      fullstackLabel: 'fullstack/',
-      fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      neofetchCommand: 'neofetch',
-      certsLine: 'Cisco (Hacker Ético, CyberOps Associate, Cyber Threat Mgmt)',
+      focus: 'Desarrollo Web y Móvil',
+      stackFrontend: 'React · Angular · TypeScript',
+      stackBackend: 'Node.js · Laravel · PHP · Python · C# · Java',
+      stackMobile: 'Flutter · Dart',
+      stackDatabase: 'PostgreSQL · SQL Server · SQLite',
+      certsLine: 'Cisco · Hacker Ético, CyberOps Associate, Cyber Threat Mgmt',
+      contactLinkedin: '/in/rafael-arenas-dev',
+      contactGithub: 'RafArenasDev',
+      contactEmail: 'rjar326@gmail.com',
+      contactTimezone: 'UTC-5 · Colombia',
     },
     stack: {
-      heading: '$ cat tech-stack.yaml',
-      command: 'cat tech-stack.yaml',
-      path: '~/rafael/tech-stack.yaml',
+      title: 'Stack Tecnológico',
+      command: 'tree tech-stack/ -L 2',
+      path: '~/tech-stack',
       groups: [
-        { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
-        { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
-        { title: 'databases:', icons: 'postgres,sqlite', items: 'PostgreSQL · SQL Server · SQLite', level: 8 },
-        { title: 'devops_tools:', icons: 'git,docker,githubactions,vite', items: 'Git · Docker · GitHub Actions · Vite · Deployments & administración de servidores', level: 7 },
+        {
+          folder: 'frontend_mobile/',
+          files: [
+            { name: 'react.tsx', icon: 'react' },
+            { name: 'angular.ts', icon: 'angular' },
+            { name: 'flutter.dart', icon: 'flutter' },
+            { name: 'typescript.ts', icon: 'ts' },
+            { name: 'javascript.js', icon: 'js' },
+          ],
+        },
+        {
+          folder: 'backend/',
+          files: [
+            { name: 'node.js', icon: 'nodejs' },
+            { name: 'laravel.php', icon: 'laravel' },
+            { name: 'zend.php', icon: 'php' },
+            { name: 'python.py', icon: 'python' },
+            { name: 'csharp.cs', icon: 'cs' },
+            { name: 'java.java', icon: 'java' },
+          ],
+        },
+        {
+          folder: 'databases/',
+          files: [
+            { name: 'postgres.sql', icon: 'postgres' },
+            { name: 'sqlserver.sql', icon: 'mssql' },
+            { name: 'sqlite.db', icon: 'sqlite' },
+          ],
+        },
+        {
+          folder: 'devops_tools/',
+          files: [
+            { name: 'git', icon: 'git' },
+            { name: 'docker', icon: 'docker' },
+            { name: 'deploy.yml', icon: 'githubactions' },
+            { name: 'vite.config.js', icon: 'vite' },
+          ],
+        },
       ],
-      status: 'status: ready   ·   environment: production',
     },
     experience: {
+      title: 'Experiencia',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafael/experience.log',
+      path: '~/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -177,19 +209,20 @@ export const translations: Record<Locale, Translations> = {
     },
     education: {
       heading: '$ cat education.yaml',
+      title: 'Educación',
       command: 'cat education.yaml',
-      path: '~/rafael/education.yaml',
-      academicTitle: 'educación_formal:',
+      path: '~/education.yaml',
+      academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Ingeniería de Sistemas', date: '2026-08' },
         { institution: 'SENA', title: 'Tecnología en Análisis y Desarrollo de Sistemas de Información', date: '2023-08' },
       ],
-      certTitle: 'certificaciones:',
+      certTitle: 'certifications:',
       certs: [
         { institution: 'Cisco Networking Academy', title: 'Hacker Ético', date: '2026-01' },
         { institution: 'Cisco Networking Academy', title: 'CyberOps Associate', date: '2026-01' },
       ],
-      profileTitle: 'perfil_blando:',
+      profileTitle: 'soft_skills:',
       softSkills: [
         'Resolución de problemas y pensamiento analítico',
         'Trabajo en equipo y colaboración multidisciplinaria',
@@ -197,14 +230,15 @@ export const translations: Record<Locale, Translations> = {
         'Adaptabilidad y gestión del cambio',
         'Aprendizaje continuo y autodesarrollo',
       ],
-      languagesLabel: 'idiomas:',
+      languagesLabel: 'languages:',
       languages: 'Español (nativo) · Inglés (B1)',
     },
     projects: {
-      heading: '$ ls -la projects/ --featured',
-      command: 'ls -la projects/ --featured',
-      path: '~/rafael/projects',
-      totalLabel: 'total',
+      title: 'Proyectos',
+      heading: '$ tree projects/ -L 2',
+      command: 'tree projects/ -L 2',
+      path: '~/projects',
+      totalLabel: 'directorios',
       items: [
         {
           slug: 'nestwork',
@@ -233,9 +267,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     contact: {
+      title: 'Contacto',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafael/connect.sh',
+      path: '~/connect.sh',
       tagline: 'Abierto a oportunidades como Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },
@@ -255,42 +290,74 @@ export const translations: Record<Locale, Translations> = {
       connect: 'connect',
     },
     hero: {
-      shellLabel: 'rafarenasdev  ·  portfolio shell  ·  online',
-      promptLabel: '❯ whoami',
+      title: 'Profile',
       command: 'whoami',
-      name: 'rafael_arenas',
+      path: '~/profile',
+      name: 'Rafael Arenas',
       role: 'Full Stack Developer',
-      contextLabel: 'context:',
-      location: 'Dosquebradas, Risaralda, Colombia',
-      experienceLabel: 'experience:',
+      origin: 'Dosquebradas, Risaralda, Colombia',
       experienceValue: '3+ years of professional software development experience',
-      missionLabel: 'mission:',
-      missionValue: 'build secure, scalable, production-ready products',
-      summaryLabel: '❯ cat profile.md',
-      summary:
-        'Systems Engineer and Fullstack Developer with 3+ years of experience in software development and enterprise-level technical support. Proven experience across frontend and backend technologies (React, Angular, Node.js, PHP, Laravel, Python, C#, Java), mobile development with Flutter, relational database administration (PostgreSQL, SQL Server, SQLite), and critical incident management with SLAs in production environments.',
-      lsCommand: '❯ ls -la expertise/',
-      fullstackLabel: 'fullstack/',
-      fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      neofetchCommand: 'neofetch',
-      certsLine: 'Cisco (Ethical Hacking, CyberOps Associate, Cyber Threat Mgmt)',
+      focus: 'Web & Mobile Development',
+      stackFrontend: 'React · Angular · TypeScript',
+      stackBackend: 'Node.js · Laravel · PHP · Python · C# · Java',
+      stackMobile: 'Flutter · Dart',
+      stackDatabase: 'PostgreSQL · SQL Server · SQLite',
+      certsLine: 'Cisco · Ethical Hacking, CyberOps Associate, Cyber Threat Mgmt',
+      contactLinkedin: '/in/rafael-arenas-dev',
+      contactGithub: 'RafArenasDev',
+      contactEmail: 'rjar326@gmail.com',
+      contactTimezone: 'UTC-5 · Colombia',
     },
     stack: {
-      heading: '$ cat tech-stack.yaml',
-      command: 'cat tech-stack.yaml',
-      path: '~/rafael/tech-stack.yaml',
+      title: 'Tech Stack',
+      command: 'tree tech-stack/ -L 2',
+      path: '~/tech-stack',
       groups: [
-        { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
-        { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
-        { title: 'databases:', icons: 'postgres,sqlite', items: 'PostgreSQL · SQL Server · SQLite', level: 8 },
-        { title: 'devops_tools:', icons: 'git,docker,githubactions,vite', items: 'Git · Docker · GitHub Actions · Vite · Server deployments & administration', level: 7 },
+        {
+          folder: 'frontend_mobile/',
+          files: [
+            { name: 'react.tsx', icon: 'react' },
+            { name: 'angular.ts', icon: 'angular' },
+            { name: 'flutter.dart', icon: 'flutter' },
+            { name: 'typescript.ts', icon: 'ts' },
+            { name: 'javascript.js', icon: 'js' },
+          ],
+        },
+        {
+          folder: 'backend/',
+          files: [
+            { name: 'node.js', icon: 'nodejs' },
+            { name: 'laravel.php', icon: 'laravel' },
+            { name: 'zend.php', icon: 'php' },
+            { name: 'python.py', icon: 'python' },
+            { name: 'csharp.cs', icon: 'cs' },
+            { name: 'java.java', icon: 'java' },
+          ],
+        },
+        {
+          folder: 'databases/',
+          files: [
+            { name: 'postgres.sql', icon: 'postgres' },
+            { name: 'sqlserver.sql', icon: 'mssql' },
+            { name: 'sqlite.db', icon: 'sqlite' },
+          ],
+        },
+        {
+          folder: 'devops_tools/',
+          files: [
+            { name: 'git', icon: 'git' },
+            { name: 'docker', icon: 'docker' },
+            { name: 'deploy.yml', icon: 'githubactions' },
+            { name: 'vite.config.js', icon: 'vite' },
+          ],
+        },
       ],
-      status: 'status: ready   ·   environment: production',
     },
     experience: {
+      title: 'Experience',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafael/experience.log',
+      path: '~/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -331,9 +398,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     education: {
+      title: 'Education',
       heading: '$ cat education.yaml',
       command: 'cat education.yaml',
-      path: '~/rafael/education.yaml',
+      path: '~/education.yaml',
       academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Systems Engineering', date: '2026-08' },
@@ -344,7 +412,7 @@ export const translations: Record<Locale, Translations> = {
         { institution: 'Cisco Networking Academy', title: 'Ethical Hacking', date: '2026-01' },
         { institution: 'Cisco Networking Academy', title: 'CyberOps Associate', date: '2026-01' },
       ],
-      profileTitle: 'soft_profile:',
+      profileTitle: 'soft_skills:',
       softSkills: [
         'Problem-solving and analytical thinking',
         'Teamwork and multidisciplinary collaboration',
@@ -356,10 +424,11 @@ export const translations: Record<Locale, Translations> = {
       languages: 'Spanish (native) · English (B1)',
     },
     projects: {
-      heading: '$ ls -la projects/ --featured',
-      command: 'ls -la projects/ --featured',
-      path: '~/rafael/projects',
-      totalLabel: 'total',
+      title: 'Projects',
+      heading: '$ tree projects/ -L 2',
+      command: 'tree projects/ -L 2',
+      path: '~/projects',
+      totalLabel: 'directories',
       items: [
         {
           slug: 'nestwork',
@@ -388,9 +457,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     contact: {
+      title: 'Contact',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafael/connect.sh',
+      path: '~/connect.sh',
       tagline: 'Open to opportunities as a Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },

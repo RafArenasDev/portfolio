@@ -6,15 +6,11 @@ interface RevealProps {
   className?: string
 }
 
-const prefersReducedMotion =
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
 export function Reveal({ children, delayMs = 0, className = '' }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(prefersReducedMotion)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (prefersReducedMotion) return
     const node = ref.current
     if (!node) return
 

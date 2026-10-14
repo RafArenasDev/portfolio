@@ -19,10 +19,12 @@ export function Hero() {
         <TerminalWindow path={h.path} active={activeSection === 'whoami'}>
           <CommandBlock sectionId="whoami" path={h.path} command={h.command}>
             <div className="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-[auto_1fr]">
-              <BitPortrait className="mx-auto w-[260px] sm:mx-0 sm:w-[300px]" />
+              <StreamLines stepMs={0}>
+                <BitPortrait className="mx-auto w-[260px] sm:mx-0 sm:w-[300px]" />
+              </StreamLines>
 
               <div className="min-w-0 font-mono text-[12.5px] leading-relaxed sm:text-[13px]">
-                <StreamLines stepMs={130}>
+                <StreamLines stepMs={130} baseDelayMs={550}>
                   <p className="font-bold text-(--color-accent)">profile:</p>
                   <p className="pl-4">
                     <span className="text-(--color-accent-strong)">subject: </span>

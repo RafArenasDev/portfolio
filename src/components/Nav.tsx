@@ -22,8 +22,6 @@ export function Nav() {
     projects: t.projects.title,
     connect: t.contact.title,
   }
-  const activeIndex = SECTION_ORDER.indexOf(activeSection as SectionId) + 1
-
   const goHome = () => {
     window.location.href = '/'
   }
@@ -47,19 +45,15 @@ export function Nav() {
           </span>
         </button>
 
-        <span className="min-w-0 truncate font-mono text-[12px] text-(--color-text-faint) sm:text-[13px]">
-          // {String(activeIndex).padStart(2, '0')} <span className="text-(--color-text-dim)">{titleFor[activeSection as SectionId]}</span>
-        </span>
-
-        <nav className="hidden min-w-0 shrink-0 items-center gap-6 font-sans text-[13px] lg:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-6 font-sans text-[13px] lg:flex">
           {SECTION_ORDER.map((id) => (
             <button
               key={id}
               type="button"
               onClick={() => goTo(id)}
-              className={`shrink-0 transition-colors ${
+              className={`shrink-0 rounded-md px-1 py-0.5 transition-all ${
                 activeSection === id
-                  ? 'text-(--color-accent)'
+                  ? 'font-semibold text-(--color-accent) [text-shadow:0_0_12px_rgba(56,189,248,0.75)]'
                   : 'text-(--color-text-dim) hover:text-(--color-accent-strong)'
               }`}
             >
@@ -103,8 +97,10 @@ export function Nav() {
               key={id}
               type="button"
               onClick={() => goTo(id)}
-              className={`py-2 text-left transition-colors ${
-                activeSection === id ? 'text-(--color-accent)' : 'text-(--color-text-dim)'
+              className={`py-2 text-left transition-all ${
+                activeSection === id
+                  ? 'font-semibold text-(--color-accent) [text-shadow:0_0_12px_rgba(56,189,248,0.75)]'
+                  : 'text-(--color-text-dim)'
               }`}
             >
               {titleFor[id]}

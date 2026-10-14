@@ -50,7 +50,7 @@ export function TechStack() {
     <section id="stack" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={2} title={s.title} />
       <Reveal>
-        <TerminalWindow active={activeSection === 'stack'}>
+        <TerminalWindow path={s.path} active={activeSection === 'stack'}>
           <CommandBlock sectionId="stack" path={s.path} command={s.command}>
             <p className="text-(--color-text)">tech-stack/</p>
             {s.groups.map((group, i) => (

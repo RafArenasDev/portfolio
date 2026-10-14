@@ -15,12 +15,18 @@ export interface Translations {
     path: string
     name: string
     role: string
-    location: string
+    origin: string
     experienceValue: string
-    fullstackValue: string
-    missionValue: string
+    focus: string
+    stackFrontend: string
+    stackBackend: string
+    stackMobile: string
+    stackDatabase: string
     certsLine: string
-    bio: string
+    contactLinkedin: string
+    contactGithub: string
+    contactEmail: string
+    contactTimezone: string
   }
   stack: {
     title: string
@@ -96,20 +102,26 @@ export const translations: Record<Locale, Translations> = {
     hero: {
       title: 'Perfil',
       command: 'whoami',
-      path: '~/rafarenasdev/profile',
+      path: '~/profile',
       name: 'Rafael Arenas',
       role: 'Full Stack Developer',
-      location: 'Dosquebradas, Risaralda, Colombia',
+      origin: 'Dosquebradas, Risaralda, Colombia',
       experienceValue: '3+ años de experiencia profesional en desarrollo de software',
-      fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      missionValue: 'construir productos seguros, escalables y listos para producción',
-      certsLine: 'Cisco (Hacker Ético, CyberOps Associate, Cyber Threat Mgmt)',
-      bio: 'Trabajo tanto en aplicativos legacy como en stacks modernos, gestiono incidentes de producción bajo SLA y despliego directamente en servidores reales — no solo en ambientes de desarrollo.',
+      focus: 'Desarrollo Web y Móvil',
+      stackFrontend: 'React · Angular · TypeScript',
+      stackBackend: 'Node.js · Laravel · PHP · Python · C# · Java',
+      stackMobile: 'Flutter · Dart',
+      stackDatabase: 'PostgreSQL · SQL Server · SQLite',
+      certsLine: 'Cisco · Hacker Ético, CyberOps Associate, Cyber Threat Mgmt',
+      contactLinkedin: '/in/rafael-arenas-dev',
+      contactGithub: 'RafArenasDev',
+      contactEmail: 'rjar326@gmail.com',
+      contactTimezone: 'UTC-5 · Colombia',
     },
     stack: {
       title: 'Stack Tecnológico',
       command: 'tree tech-stack/ -L 2',
-      path: '~/rafarenasdev/tech-stack',
+      path: '~/tech-stack',
       groups: [
         {
           folder: 'frontend_mobile/',
@@ -155,7 +167,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Experiencia',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafarenasdev/experience.log',
+      path: '~/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -199,7 +211,7 @@ export const translations: Record<Locale, Translations> = {
       heading: '$ cat education.yaml',
       title: 'Educación',
       command: 'cat education.yaml',
-      path: '~/rafarenasdev/education.yaml',
+      path: '~/education.yaml',
       academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Ingeniería de Sistemas', date: '2026-08' },
@@ -225,7 +237,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Proyectos',
       heading: '$ tree projects/ -L 2',
       command: 'tree projects/ -L 2',
-      path: '~/rafarenasdev/projects',
+      path: '~/projects',
       totalLabel: 'directorios',
       items: [
         {
@@ -258,7 +270,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Contacto',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafarenasdev/connect.sh',
+      path: '~/connect.sh',
       tagline: 'Abierto a oportunidades como Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },
@@ -280,20 +292,26 @@ export const translations: Record<Locale, Translations> = {
     hero: {
       title: 'Profile',
       command: 'whoami',
-      path: '~/rafarenasdev/profile',
+      path: '~/profile',
       name: 'Rafael Arenas',
       role: 'Full Stack Developer',
-      location: 'Dosquebradas, Risaralda, Colombia',
+      origin: 'Dosquebradas, Risaralda, Colombia',
       experienceValue: '3+ years of professional software development experience',
-      fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      missionValue: 'build secure, scalable, production-ready products',
-      certsLine: 'Cisco (Ethical Hacking, CyberOps Associate, Cyber Threat Mgmt)',
-      bio: 'I work across legacy and modern stacks, manage production incidents under SLA, and deploy directly to real servers — not just dev environments.',
+      focus: 'Web & Mobile Development',
+      stackFrontend: 'React · Angular · TypeScript',
+      stackBackend: 'Node.js · Laravel · PHP · Python · C# · Java',
+      stackMobile: 'Flutter · Dart',
+      stackDatabase: 'PostgreSQL · SQL Server · SQLite',
+      certsLine: 'Cisco · Ethical Hacking, CyberOps Associate, Cyber Threat Mgmt',
+      contactLinkedin: '/in/rafael-arenas-dev',
+      contactGithub: 'RafArenasDev',
+      contactEmail: 'rjar326@gmail.com',
+      contactTimezone: 'UTC-5 · Colombia',
     },
     stack: {
       title: 'Tech Stack',
       command: 'tree tech-stack/ -L 2',
-      path: '~/rafarenasdev/tech-stack',
+      path: '~/tech-stack',
       groups: [
         {
           folder: 'frontend_mobile/',
@@ -339,7 +357,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Experience',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafarenasdev/experience.log',
+      path: '~/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -383,7 +401,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Education',
       heading: '$ cat education.yaml',
       command: 'cat education.yaml',
-      path: '~/rafarenasdev/education.yaml',
+      path: '~/education.yaml',
       academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Systems Engineering', date: '2026-08' },
@@ -409,7 +427,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Projects',
       heading: '$ tree projects/ -L 2',
       command: 'tree projects/ -L 2',
-      path: '~/rafarenasdev/projects',
+      path: '~/projects',
       totalLabel: 'directories',
       items: [
         {
@@ -442,7 +460,7 @@ export const translations: Record<Locale, Translations> = {
       title: 'Contact',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafarenasdev/connect.sh',
+      path: '~/connect.sh',
       tagline: 'Open to opportunities as a Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },

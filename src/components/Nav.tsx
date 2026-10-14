@@ -21,6 +21,16 @@ export function Nav() {
   const { activeSection } = usePortfolioUI()
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const titleFor: Record<SectionId, string> = {
+    whoami: t.hero.title,
+    stack: t.stack.title,
+    experience: t.experience.title,
+    education: t.education.title,
+    projects: t.projects.title,
+    connect: t.contact.title,
+  }
+  const activeIndex = SECTIONS.findIndex((s) => s.id === activeSection) + 1
+
   const goHome = () => {
     setMenuOpen(false)
     scrollToSection('whoami')
@@ -33,20 +43,23 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-(--color-border) bg-(--color-bg)/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-2.5">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-2.5">
         <button type="button" onClick={goHome} className="group flex shrink-0 items-center gap-2" aria-label="Home">
           <img
             src={avatar}
             alt=""
             className="h-8 w-8 rounded-md object-cover ring-1 ring-(--color-border-strong) transition-[box-shadow] group-hover:ring-(--color-accent)"
           />
-          <span className="hidden font-mono text-sm text-(--color-accent) sm:inline">
-            rafarenasdev<span className="text-(--color-text-faint)">@</span>portfolio
-            <span className="text-(--color-text-faint)">:~$</span>
+          <span className="hidden font-sans text-base font-bold tracking-tight text-(--color-accent) [text-shadow:0_0_14px_rgba(56,189,248,0.55)] sm:inline">
+            Rafael Arenas
           </span>
         </button>
 
-        <nav className="hidden min-w-0 items-center gap-6 font-mono text-[13px] sm:flex">
+        <span className="min-w-0 truncate font-mono text-[12px] text-(--color-text-faint) sm:text-[13px]">
+          // {String(activeIndex).padStart(2, '0')} <span className="text-(--color-text-dim)">{titleFor[activeSection as SectionId]}</span>
+        </span>
+
+        <nav className="hidden min-w-0 shrink-0 items-center gap-6 font-mono text-[13px] lg:flex">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
@@ -76,7 +89,7 @@ export function Nav() {
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-(--color-border-strong) text-(--color-text-dim) hover:border-(--color-accent) hover:text-(--color-accent) sm:hidden"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-(--color-border-strong) text-(--color-text-dim) hover:border-(--color-accent) hover:text-(--color-accent) lg:hidden"
             aria-label="Menu"
             aria-expanded={menuOpen}
           >
@@ -92,7 +105,7 @@ export function Nav() {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col border-t border-(--color-border) px-5 py-3 font-mono text-sm sm:hidden">
+        <nav className="flex flex-col border-t border-(--color-border) px-5 py-3 font-mono text-sm lg:hidden">
           {SECTIONS.map((s) => (
             <button
               key={s.id}

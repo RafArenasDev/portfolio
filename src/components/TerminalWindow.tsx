@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react'
 
 interface TerminalWindowProps {
+  path: string
   active?: boolean
   children: ReactNode
   className?: string
 }
 
-/** An authentic macOS/Unix terminal window chrome — the session title stays generic; which section it is lives in the heading above it. */
-export function TerminalWindow({ active = false, children, className = '' }: TerminalWindowProps) {
+/** An authentic macOS/Unix terminal window chrome — title shows user + cwd, like a real session; which section it is lives in the heading above it. */
+export function TerminalWindow({ path, active = false, children, className = '' }: TerminalWindowProps) {
   return (
     <div
       className={`overflow-hidden rounded-xl border bg-(--color-bg) shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)] transition-[filter,opacity,border-color,box-shadow] duration-500 ease-out ${
@@ -25,8 +26,8 @@ export function TerminalWindow({ active = false, children, className = '' }: Ter
           <span className="h-2.5 w-2.5 rounded-full bg-(--color-mac-amber) shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]" />
           <span className="h-2.5 w-2.5 rounded-full bg-(--color-mac-green) shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]" />
         </div>
-        <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 font-sans text-[13px] font-medium text-(--color-text-dim)">
-          rafarenasdev — -zsh — 80×24
+        <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 truncate px-16 font-sans text-[13px] font-medium text-(--color-text-dim)">
+          rafarenasdev — {path}
         </span>
       </div>
       <div className="overflow-x-auto bg-(--color-bg) p-4 font-mono text-[13px] leading-relaxed sm:p-6">

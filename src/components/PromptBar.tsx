@@ -38,14 +38,14 @@ function Segment({
     >
       {tail === 'left' && (
         <span
-          className="absolute -left-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-r-[7px]"
+          className="absolute -left-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-r-[10px]"
           style={{ borderRightColor: bg }}
         />
       )}
       {text}
       {tail === 'right' && (
         <span
-          className="absolute -right-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-l-[7px]"
+          className="absolute -right-[1px] top-0 z-10 h-0 w-0 border-y-[14px] border-y-transparent border-l-[10px]"
           style={{ borderLeftColor: bg }}
         />
       )}
@@ -114,8 +114,8 @@ export function PromptLine({ path, command, bootToken, onTypedDone }: PromptLine
           <Segment bg="#ff9248" fg="#2a2a2a" text={` ${path} `} last />
         </div>
         <div className="flex">
-          <Segment bg="#0077c2" fg="#ffffff" text={<AppleMark />} first />
-          <Segment bg="#8ecbf2" fg="#0a2f4a" text={` ${dateLabel} `} last tail="left" />
+          <Segment bg="#0a3d66" fg="#ffffff" text={<AppleMark />} first tail="right" />
+          <Segment bg="#8ecbf2" fg="#0a2f4a" text={` ${dateLabel} `} last />
         </div>
       </div>
       <div className="mt-1 font-mono text-[13px] sm:text-sm">

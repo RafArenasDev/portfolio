@@ -62,7 +62,7 @@ export function Projects() {
     <section id="projects" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={5} title={p.title} />
       <Reveal>
-        <TerminalWindow active={activeSection === 'projects'}>
+        <TerminalWindow path={p.path} active={activeSection === 'projects'}>
           <CommandBlock sectionId="projects" path={p.path} command={p.command}>
             <p className="text-(--color-text)">projects/</p>
             {p.items.map((project, i) => (

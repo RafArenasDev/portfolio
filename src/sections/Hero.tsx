@@ -4,7 +4,6 @@ import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { StreamLines } from '../components/StreamLines'
 import { TerminalWindow } from '../components/TerminalWindow'
-import { TypingText } from '../components/TypingText'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
 
@@ -33,9 +32,7 @@ export function Hero() {
                   </p>
                   <p className="pl-4">
                     <span className="text-(--color-accent-strong)">role: </span>
-                    <span className="font-semibold text-(--color-text)">
-                      <TypingText lines={[h.role]} />
-                    </span>
+                    <span className="font-semibold text-(--color-text)">{h.role}</span>
                   </p>
                   <p className="pl-4">
                     <span className="text-(--color-accent-strong)">origin: </span>

@@ -7,14 +7,7 @@ function scrollToSection(id: SectionId) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-const SECTIONS: { id: SectionId; navKey: 'whoami' | 'stack' | 'experience' | 'education' | 'projects' | 'connect' }[] = [
-  { id: 'whoami', navKey: 'whoami' },
-  { id: 'stack', navKey: 'stack' },
-  { id: 'experience', navKey: 'experience' },
-  { id: 'education', navKey: 'education' },
-  { id: 'projects', navKey: 'projects' },
-  { id: 'connect', navKey: 'connect' },
-]
+const SECTION_ORDER: SectionId[] = ['whoami', 'stack', 'experience', 'education', 'projects', 'connect']
 
 export function Nav() {
   const { t, locale, toggleLocale } = useLocale()
@@ -29,11 +22,10 @@ export function Nav() {
     projects: t.projects.title,
     connect: t.contact.title,
   }
-  const activeIndex = SECTIONS.findIndex((s) => s.id === activeSection) + 1
+  const activeIndex = SECTION_ORDER.indexOf(activeSection as SectionId) + 1
 
   const goHome = () => {
-    setMenuOpen(false)
-    scrollToSection('whoami')
+    window.location.href = '/'
   }
 
   const goTo = (id: SectionId) => {
@@ -59,19 +51,19 @@ export function Nav() {
           // {String(activeIndex).padStart(2, '0')} <span className="text-(--color-text-dim)">{titleFor[activeSection as SectionId]}</span>
         </span>
 
-        <nav className="hidden min-w-0 shrink-0 items-center gap-6 font-mono text-[13px] lg:flex">
-          {SECTIONS.map((s) => (
+        <nav className="hidden min-w-0 shrink-0 items-center gap-6 font-sans text-[13px] lg:flex">
+          {SECTION_ORDER.map((id) => (
             <button
-              key={s.id}
+              key={id}
               type="button"
-              onClick={() => goTo(s.id)}
+              onClick={() => goTo(id)}
               className={`shrink-0 transition-colors ${
-                activeSection === s.id
+                activeSection === id
                   ? 'text-(--color-accent)'
                   : 'text-(--color-text-dim) hover:text-(--color-accent-strong)'
               }`}
             >
-              ./{t.nav[s.navKey]}
+              {titleFor[id]}
             </button>
           ))}
         </nav>
@@ -105,17 +97,17 @@ export function Nav() {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col border-t border-(--color-border) px-5 py-3 font-mono text-sm lg:hidden">
-          {SECTIONS.map((s) => (
+        <nav className="flex flex-col border-t border-(--color-border) px-5 py-3 font-sans text-sm lg:hidden">
+          {SECTION_ORDER.map((id) => (
             <button
-              key={s.id}
+              key={id}
               type="button"
-              onClick={() => goTo(s.id)}
+              onClick={() => goTo(id)}
               className={`py-2 text-left transition-colors ${
-                activeSection === s.id ? 'text-(--color-accent)' : 'text-(--color-text-dim)'
+                activeSection === id ? 'text-(--color-accent)' : 'text-(--color-text-dim)'
               }`}
             >
-              ./{t.nav[s.navKey]}
+              {titleFor[id]}
             </button>
           ))}
         </nav>

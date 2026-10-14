@@ -1,5 +1,6 @@
 import { usePortfolioUI, type SectionId } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
+import { triggerSection } from '../lib/bootStore'
 
 const SECTIONS: { id: SectionId; navKey: 'whoami' | 'stack' | 'experience' | 'education' | 'projects' | 'connect' }[] = [
   { id: 'whoami', navKey: 'whoami' },
@@ -12,40 +13,23 @@ const SECTIONS: { id: SectionId; navKey: 'whoami' | 'stack' | 'experience' | 'ed
 
 export function Nav() {
   const { t, locale, toggleLocale } = useLocale()
-  const { activeSection, runCommand } = usePortfolioUI()
-
-  const commandFor = (id: SectionId): string => {
-    switch (id) {
-      case 'whoami':
-        return t.hero.command
-      case 'stack':
-        return t.stack.command
-      case 'experience':
-        return t.experience.command
-      case 'education':
-        return t.education.command
-      case 'projects':
-        return t.projects.command
-      case 'connect':
-        return t.contact.command
-    }
-  }
+  const { activeSection } = usePortfolioUI()
 
   return (
     <header className="sticky top-0 z-50 border-b border-(--color-border) bg-(--color-bg)/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-3.5">
-        <span className="font-mono text-sm text-(--color-accent)">
-          rafael<span className="text-(--color-text-faint)">@</span>portfolio
-          <span className="text-(--color-text-faint)">:~$</span>
+        <span className="shrink-0 font-mono text-[13px] text-(--color-accent) sm:text-sm">
+          rafarenasdev<span className="text-(--color-text-faint)">@</span>portfolio
+          <span className="hidden text-(--color-text-faint) sm:inline">:~$</span>
         </span>
 
-        <nav className="hidden items-center gap-6 font-mono text-[13px] sm:flex">
+        <nav className="flex min-w-0 items-center gap-4 overflow-x-auto font-mono text-[12.5px] sm:gap-6 sm:text-[13px]">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               type="button"
-              onClick={() => runCommand(s.id, commandFor(s.id))}
-              className={`transition-colors ${
+              onClick={() => triggerSection(s.id, { scroll: true })}
+              className={`shrink-0 transition-colors ${
                 activeSection === s.id
                   ? 'text-(--color-accent)'
                   : 'text-(--color-text-dim) hover:text-(--color-accent-strong)'
@@ -59,7 +43,7 @@ export function Nav() {
         <button
           type="button"
           onClick={toggleLocale}
-          className="rounded-md border border-(--color-border-strong) px-2.5 py-1 font-mono text-xs text-(--color-text-dim) transition-colors hover:border-(--color-accent) hover:text-(--color-accent)"
+          className="shrink-0 rounded-md border border-(--color-border-strong) px-2 py-1 font-mono text-[11px] text-(--color-text-dim) transition-colors hover:border-(--color-accent) hover:text-(--color-accent) sm:px-2.5 sm:text-xs"
           aria-label="Toggle language"
         >
           --lang={locale}

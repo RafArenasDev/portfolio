@@ -1,5 +1,6 @@
 import { CommandBlock } from '../components/CommandBlock'
 import { Reveal } from '../components/Reveal'
+import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
@@ -11,8 +12,9 @@ export function Experience() {
 
   return (
     <section id="experience" className="mx-auto max-w-5xl px-5 py-8">
+      <SectionHeading index={3} title={e.title} />
       <Reveal>
-        <TerminalWindow title="rafael — zsh — ~/experience" active={activeSection === 'experience'}>
+        <TerminalWindow title="rafarenasdev — zsh — ~/experience" active={activeSection === 'experience'}>
           <CommandBlock sectionId="experience" path={e.path} command={e.command}>
             <div className="space-y-5">
               {e.jobs.map((job, i) => (

@@ -8,6 +8,19 @@ const GRID_H = 340
 const CELL = 1.3
 const DOT_COLOR = 'rgba(56, 189, 248, 0.92)'
 
+interface Crop {
+  left: number
+  top: number
+  width: number
+  height: number
+}
+
+function cropFor(img: HTMLImageElement): Crop {
+  const width = img.width * 0.62
+  const height = width * (GRID_H / GRID_W)
+  return { left: (img.width - width) / 2, top: img.height * 0.03, width, height }
+}
+
 function clamp255(v: number) {
   return v < 0 ? 0 : v > 255 ? 255 : v
 }
@@ -59,13 +72,7 @@ function floydSteinbergSerpentine(gray: Float32Array, w: number, h: number): Uin
   return out
 }
 
-function ditherAvatar(img: HTMLImageElement): { on: Uint8Array; count: number } {
-  // tighter head + shoulders crop, matching the VISUAL.MAP framing
-  const cropW = img.width * 0.62
-  const cropH = cropW * (GRID_H / GRID_W)
-  const left = (img.width - cropW) / 2
-  const top = img.height * 0.03
-
+function ditherAvatar(img: HTMLImageElement, crop: Crop): { on: Uint8Array; count: number } {
   const sample = document.createElement('canvas')
   sample.width = GRID_W
   sample.height = GRID_H
@@ -75,7 +82,7 @@ function ditherAvatar(img: HTMLImageElement): { on: Uint8Array; count: number } 
   // composite over solid black first, like the dark-theme banner
   ctx.fillStyle = '#000000'
   ctx.fillRect(0, 0, GRID_W, GRID_H)
-  ctx.drawImage(img, left, top, cropW, cropH, 0, 0, GRID_W, GRID_H)
+  ctx.drawImage(img, crop.left, crop.top, crop.width, crop.height, 0, 0, GRID_W, GRID_H)
 
   const { data } = ctx.getImageData(0, 0, GRID_W, GRID_H)
   const gray = new Float32Array(GRID_W * GRID_H)
@@ -107,62 +114,67 @@ function ditherAvatar(img: HTMLImageElement): { on: Uint8Array; count: number } 
 /**
  * Real avatar rendered as a 1-bit Floyd-Steinberg (serpentine) dithered dot
  * portrait, porting scripts/banner/generate.py from github.com/RafArenasDev
- * to canvas — same "VISUAL.MAP" framing, same dithering math. Crossfades to
- * the plain image on hover and on a slow autoplay cycle.
+ * to canvas — same "VISUAL.MAP" framing, same dithering math, same crop
+ * used for the plain-image hover layer so neither ever changes size.
  */
 export function BitPortrait({ className = '' }: { className?: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const dotCanvasRef = useRef<HTMLCanvasElement>(null)
+  const plainCanvasRef = useRef<HTMLCanvasElement>(null)
   const [count, setCount] = useState(0)
-  const [mode, setMode] = useState<'bits' | 'plain'>('bits')
-  const hovered = useRef(false)
+  const [hovering, setHovering] = useState(false)
 
   useEffect(() => {
     const img = new Image()
     img.src = avatar
     img.onload = () => {
-      const { on, count: lit } = ditherAvatar(img)
+      const crop = cropFor(img)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const w = GRID_W * CELL
+      const h = GRID_H * CELL
+
+      const { on, count: lit } = ditherAvatar(img, crop)
       setCount(lit)
 
-      const canvas = canvasRef.current
-      if (!canvas) return
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = GRID_W * CELL * dpr
-      canvas.height = GRID_H * CELL * dpr
-      canvas.style.width = '100%'
-      canvas.style.height = 'auto'
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-      ctx.scale(dpr, dpr)
-      ctx.fillStyle = '#05080e'
-      ctx.fillRect(0, 0, GRID_W * CELL, GRID_H * CELL)
-      ctx.fillStyle = DOT_COLOR
-      for (let y = 0; y < GRID_H; y++) {
-        for (let x = 0; x < GRID_W; x++) {
-          if (!on[y * GRID_W + x]) continue
-          ctx.fillRect(x * CELL, y * CELL, CELL * 1.05, CELL * 1.05)
+      const dotCanvas = dotCanvasRef.current
+      const plainCanvas = plainCanvasRef.current
+      if (!dotCanvas || !plainCanvas) return
+
+      for (const canvas of [dotCanvas, plainCanvas]) {
+        canvas.width = w * dpr
+        canvas.height = h * dpr
+        canvas.style.width = '100%'
+        canvas.style.height = 'auto'
+      }
+
+      const dotCtx = dotCanvas.getContext('2d')
+      if (dotCtx) {
+        dotCtx.scale(dpr, dpr)
+        dotCtx.fillStyle = '#05080e'
+        dotCtx.fillRect(0, 0, w, h)
+        dotCtx.fillStyle = DOT_COLOR
+        for (let y = 0; y < GRID_H; y++) {
+          for (let x = 0; x < GRID_W; x++) {
+            if (!on[y * GRID_W + x]) continue
+            dotCtx.fillRect(x * CELL, y * CELL, CELL * 1.05, CELL * 1.05)
+          }
         }
       }
-    }
-  }, [])
 
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      if (!hovered.current) setMode((m) => (m === 'bits' ? 'plain' : 'bits'))
-    }, 6500)
-    return () => window.clearInterval(id)
+      const plainCtx = plainCanvas.getContext('2d')
+      if (plainCtx) {
+        plainCtx.scale(dpr, dpr)
+        plainCtx.fillStyle = '#05080e'
+        plainCtx.fillRect(0, 0, w, h)
+        plainCtx.drawImage(img, crop.left, crop.top, crop.width, crop.height, 0, 0, w, h)
+      }
+    }
   }, [])
 
   return (
     <div
       className={`select-none ${className}`}
-      onMouseEnter={() => {
-        hovered.current = true
-        setMode('plain')
-      }}
-      onMouseLeave={() => {
-        hovered.current = false
-        setMode('bits')
-      }}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
     >
       <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] font-bold tracking-wider text-(--color-accent-strong)">
         <span>VISUAL.MAP</span>
@@ -182,17 +194,16 @@ export function BitPortrait({ className = '' }: { className?: string }) {
         <span className="absolute bottom-1 right-1 h-2.5 w-2.5 border-b border-r border-(--color-accent-strong) opacity-60" />
 
         <canvas
-          ref={canvasRef}
-          aria-hidden={mode !== 'bits'}
-          className="animate-portrait-drift absolute inset-0 h-full w-full transition-opacity duration-700"
-          style={{ opacity: mode === 'bits' ? 1 : 0 }}
+          ref={dotCanvasRef}
+          aria-hidden={hovering}
+          className="animate-portrait-drift absolute inset-0 h-full w-full transition-opacity duration-500"
+          style={{ opacity: hovering ? 0 : 1 }}
         />
-        <img
-          src={avatar}
-          alt=""
-          aria-hidden={mode !== 'plain'}
-          className="absolute inset-0 h-full w-full object-contain p-2 transition-opacity duration-700"
-          style={{ opacity: mode === 'plain' ? 1 : 0 }}
+        <canvas
+          ref={plainCanvasRef}
+          aria-hidden={!hovering}
+          className="absolute inset-0 h-full w-full transition-opacity duration-500"
+          style={{ opacity: hovering ? 1 : 0 }}
         />
       </div>
       <p className="mt-1 font-mono text-[10px] text-(--color-text-faint)">

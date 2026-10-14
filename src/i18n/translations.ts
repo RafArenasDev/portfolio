@@ -10,26 +10,20 @@ export interface Translations {
     connect: string
   }
   hero: {
-    shellLabel: string
-    promptLabel: string
+    title: string
     command: string
+    path: string
     name: string
     role: string
-    contextLabel: string
     location: string
-    experienceLabel: string
     experienceValue: string
-    missionLabel: string
-    missionValue: string
-    summaryLabel: string
-    summary: string
-    lsCommand: string
-    fullstackLabel: string
     fullstackValue: string
-    neofetchCommand: string
+    missionValue: string
     certsLine: string
+    bio: string
   }
   stack: {
+    title: string
     heading: string
     command: string
     path: string
@@ -42,6 +36,7 @@ export interface Translations {
     status: string
   }
   experience: {
+    title: string
     heading: string
     command: string
     path: string
@@ -53,6 +48,7 @@ export interface Translations {
     }[]
   }
   education: {
+    title: string
     heading: string
     command: string
     path: string
@@ -66,6 +62,7 @@ export interface Translations {
     languages: string
   }
   projects: {
+    title: string
     heading: string
     command: string
     path: string
@@ -80,6 +77,7 @@ export interface Translations {
     }[]
   }
   contact: {
+    title: string
     heading: string
     command: string
     path: string
@@ -100,30 +98,23 @@ export const translations: Record<Locale, Translations> = {
       connect: 'connect',
     },
     hero: {
-      shellLabel: 'rafarenasdev  ·  portfolio shell  ·  online',
-      promptLabel: '❯ whoami',
+      title: 'Perfil',
       command: 'whoami',
-      name: 'rafael_arenas',
+      path: '~/rafarenasdev',
+      name: 'rafarenasdev',
       role: 'Full Stack Developer',
-      contextLabel: 'context:',
       location: 'Dosquebradas, Risaralda, Colombia',
-      experienceLabel: 'experience:',
       experienceValue: '3+ años de experiencia profesional en desarrollo de software',
-      missionLabel: 'mission:',
-      missionValue: 'construir productos seguros, escalables y listos para producción',
-      summaryLabel: '❯ cat profile.md',
-      summary:
-        'Ingeniero de Sistemas y Desarrollador Fullstack con más de 3 años de experiencia en desarrollo de software y soporte técnico de nivel empresarial. Experiencia comprobada en tecnologías frontend y backend (React, Angular, Node.js, PHP, Laravel, Python, C#, Java), desarrollo móvil con Flutter, administración de bases de datos relacionales (PostgreSQL, SQL Server, SQLite) y gestión de incidentes críticos con SLA en entornos de producción.',
-      lsCommand: '❯ ls -la expertise/',
-      fullstackLabel: 'fullstack/',
       fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      neofetchCommand: 'neofetch',
+      missionValue: 'construir productos seguros, escalables y listos para producción',
       certsLine: 'Cisco (Hacker Ético, CyberOps Associate, Cyber Threat Mgmt)',
+      bio: 'Construyo interfaces y APIs con React, Angular, Node.js, Laravel y Flutter, con base sólida en PostgreSQL, SQL Server y SQLite, y experiencia real gestionando incidentes críticos en producción.',
     },
     stack: {
+      title: 'Stack Tecnológico',
       heading: '$ cat tech-stack.yaml',
       command: 'cat tech-stack.yaml',
-      path: '~/rafael/tech-stack.yaml',
+      path: '~/rafarenasdev/tech-stack.yaml',
       groups: [
         { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
         { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
@@ -133,9 +124,10 @@ export const translations: Record<Locale, Translations> = {
       status: 'status: ready   ·   environment: production',
     },
     experience: {
+      title: 'Experiencia',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafael/experience.log',
+      path: '~/rafarenasdev/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -177,8 +169,9 @@ export const translations: Record<Locale, Translations> = {
     },
     education: {
       heading: '$ cat education.yaml',
+      title: 'Educación',
       command: 'cat education.yaml',
-      path: '~/rafael/education.yaml',
+      path: '~/rafarenasdev/education.yaml',
       academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Ingeniería de Sistemas', date: '2026-08' },
@@ -201,10 +194,11 @@ export const translations: Record<Locale, Translations> = {
       languages: 'Español (nativo) · Inglés (B1)',
     },
     projects: {
-      heading: '$ ls -la projects/ --featured',
-      command: 'ls -la projects/ --featured',
-      path: '~/rafael/projects',
-      totalLabel: 'total',
+      title: 'Proyectos',
+      heading: '$ tree projects/ -L 2',
+      command: 'tree projects/ -L 2',
+      path: '~/rafarenasdev/projects',
+      totalLabel: 'directorios',
       items: [
         {
           slug: 'nestwork',
@@ -233,9 +227,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     contact: {
+      title: 'Contacto',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafael/connect.sh',
+      path: '~/rafarenasdev/connect.sh',
       tagline: 'Abierto a oportunidades como Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },
@@ -255,30 +250,23 @@ export const translations: Record<Locale, Translations> = {
       connect: 'connect',
     },
     hero: {
-      shellLabel: 'rafarenasdev  ·  portfolio shell  ·  online',
-      promptLabel: '❯ whoami',
+      title: 'Profile',
       command: 'whoami',
-      name: 'rafael_arenas',
+      path: '~/rafarenasdev',
+      name: 'rafarenasdev',
       role: 'Full Stack Developer',
-      contextLabel: 'context:',
       location: 'Dosquebradas, Risaralda, Colombia',
-      experienceLabel: 'experience:',
       experienceValue: '3+ years of professional software development experience',
-      missionLabel: 'mission:',
-      missionValue: 'build secure, scalable, production-ready products',
-      summaryLabel: '❯ cat profile.md',
-      summary:
-        'Systems Engineer and Fullstack Developer with 3+ years of experience in software development and enterprise-level technical support. Proven experience across frontend and backend technologies (React, Angular, Node.js, PHP, Laravel, Python, C#, Java), mobile development with Flutter, relational database administration (PostgreSQL, SQL Server, SQLite), and critical incident management with SLAs in production environments.',
-      lsCommand: '❯ ls -la expertise/',
-      fullstackLabel: 'fullstack/',
       fullstackValue: 'React · Angular · Node.js · Laravel · Flutter',
-      neofetchCommand: 'neofetch',
+      missionValue: 'build secure, scalable, production-ready products',
       certsLine: 'Cisco (Ethical Hacking, CyberOps Associate, Cyber Threat Mgmt)',
+      bio: 'I build interfaces and APIs with React, Angular, Node.js, Laravel and Flutter, backed by solid PostgreSQL, SQL Server and SQLite experience, plus hands-on critical-incident management in production.',
     },
     stack: {
+      title: 'Tech Stack',
       heading: '$ cat tech-stack.yaml',
       command: 'cat tech-stack.yaml',
-      path: '~/rafael/tech-stack.yaml',
+      path: '~/rafarenasdev/tech-stack.yaml',
       groups: [
         { title: 'frontend_mobile:', icons: 'react,angular,flutter,ts,js', items: 'React · Angular 14-18 · Flutter (Dart) · TypeScript · JavaScript', level: 9 },
         { title: 'backend:', icons: 'nodejs,laravel,php,python,cs,java', items: 'Node.js · Laravel · PHP/Zend Framework · Python · C# · Java', level: 9 },
@@ -288,9 +276,10 @@ export const translations: Record<Locale, Translations> = {
       status: 'status: ready   ·   environment: production',
     },
     experience: {
+      title: 'Experience',
       heading: '$ cat experience.log',
       command: 'cat experience.log',
-      path: '~/rafael/experience.log',
+      path: '~/rafarenasdev/experience.log',
       jobs: [
         {
           company: 'RAPPI S.A.S',
@@ -331,9 +320,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     education: {
+      title: 'Education',
       heading: '$ cat education.yaml',
       command: 'cat education.yaml',
-      path: '~/rafael/education.yaml',
+      path: '~/rafarenasdev/education.yaml',
       academicTitle: 'formal_education:',
       academic: [
         { institution: 'Fundación Universitaria del Área Andina', title: 'Systems Engineering', date: '2026-08' },
@@ -356,10 +346,11 @@ export const translations: Record<Locale, Translations> = {
       languages: 'Spanish (native) · English (B1)',
     },
     projects: {
-      heading: '$ ls -la projects/ --featured',
-      command: 'ls -la projects/ --featured',
-      path: '~/rafael/projects',
-      totalLabel: 'total',
+      title: 'Projects',
+      heading: '$ tree projects/ -L 2',
+      command: 'tree projects/ -L 2',
+      path: '~/rafarenasdev/projects',
+      totalLabel: 'directories',
       items: [
         {
           slug: 'nestwork',
@@ -388,9 +379,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     contact: {
+      title: 'Contact',
       heading: '$ ./connect.sh --socials',
       command: './connect.sh --socials',
-      path: '~/rafael/connect.sh',
+      path: '~/rafarenasdev/connect.sh',
       tagline: 'Open to opportunities as a Full Stack Developer.',
       links: [
         { label: 'GitHub', href: 'https://github.com/RafArenasDev' },

@@ -1,5 +1,6 @@
 import { CommandBlock } from '../components/CommandBlock'
 import { Reveal } from '../components/Reveal'
+import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
@@ -11,8 +12,9 @@ export function Education() {
 
   return (
     <section id="education" className="mx-auto max-w-5xl px-5 py-8">
+      <SectionHeading index={4} title={e.title} />
       <Reveal>
-        <TerminalWindow title="rafael — zsh — ~/education" active={activeSection === 'education'}>
+        <TerminalWindow title="rafarenasdev — zsh — ~/education" active={activeSection === 'education'}>
           <CommandBlock sectionId="education" path={e.path} command={e.command}>
             <div className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
               <div>

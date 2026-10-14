@@ -1,5 +1,6 @@
 import { CommandBlock } from '../components/CommandBlock'
 import { Reveal } from '../components/Reveal'
+import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
 import { usePortfolioUI } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
@@ -15,8 +16,9 @@ export function TechStack() {
 
   return (
     <section id="stack" className="mx-auto max-w-5xl px-5 py-8">
+      <SectionHeading index={2} title={s.title} />
       <Reveal>
-        <TerminalWindow title="rafael — zsh — ~/tech-stack" active={activeSection === 'stack'}>
+        <TerminalWindow title="rafarenasdev — zsh — ~/tech-stack" active={activeSection === 'stack'}>
           <CommandBlock sectionId="stack" path={s.path} command={s.command}>
             <div className="space-y-4">
               {s.groups.map((group, i) => (

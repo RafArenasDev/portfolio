@@ -10,14 +10,14 @@ interface CommandBlockProps {
   children: ReactNode
 }
 
-/** A prompt line whose command retypes live in place; output appears the instant it finishes — no spinner. */
+/** A prompt line that retypes its command on first scroll-into-view (or on nav replay); output reveals once it finishes — no spinner. */
 export function CommandBlock({ sectionId, path, command, children }: CommandBlockProps) {
-  const { replayKey, revealed, handleTypedDone } = useCommandReplay(sectionId)
+  const { token, revealed, handleTypedDone, containerRef } = useCommandReplay(sectionId)
 
   return (
-    <>
-      <PromptLine path={path} command={command} replayKey={replayKey} onTypedDone={handleTypedDone} />
-      {revealed && <div className={replayKey ? 'animate-command-reveal' : ''}>{children}</div>}
-    </>
+    <div ref={containerRef}>
+      <PromptLine path={path} command={command} bootToken={token} onTypedDone={handleTypedDone} />
+      {revealed && <div className="animate-command-reveal">{children}</div>}
+    </div>
   )
 }

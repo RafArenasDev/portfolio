@@ -1,24 +1,51 @@
-import { useEffect, useState } from 'react'
-import { usePortfolioUI, type PendingCommand, type SectionId } from '../context/PortfolioUIContext'
+import { useEffect, useRef, useState } from 'react'
+import type { SectionId } from '../context/PortfolioUIContext'
+import { triggerSection, useBootToken } from '../lib/bootStore'
 
+/**
+ * Drives one terminal's "boot sequence": its command retypes and its output
+ * reveals either the first time it scrolls into view, or whenever nav
+ * explicitly retriggers it — same behavior either way. Reads its token from
+ * an external store (not React context) so one section's typing animation
+ * never re-renders the other five.
+ */
 export function useCommandReplay(sectionId: SectionId) {
-  const { pendingCommand, clearCommand } = usePortfolioUI()
-  const [revealed, setRevealed] = useState(true)
-
-  const isTarget = pendingCommand?.targetId === sectionId
-  const replayKey = isTarget ? pendingCommand : undefined
+  const token = useBootToken(sectionId)
+  const [revealed, setRevealed] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const booted = useRef(false)
+  // compare against the last-seen VALUE, not a one-shot boolean flag —
+  // StrictMode double-invokes mount effects, which breaks "have I run
+  // before" booleans but leaves value comparisons idempotent and safe
+  const prevToken = useRef(token)
 
   useEffect(() => {
-    // hide output the instant this section becomes the target, in sync with
-    // the command retyping — there's nothing to show until it "runs"
-    if (isTarget) setRevealed(false)
-  }, [isTarget, pendingCommand])
+    if (token !== prevToken.current) {
+      prevToken.current = token
+      booted.current = true
+      setRevealed(false)
+    }
+  }, [token])
 
-  const handleTypedDone = (command: PendingCommand) => {
-    // a real shell prints output the instant the command finishes — no spinner
-    setRevealed(true)
-    clearCommand(command)
-  }
+  useEffect(() => {
+    const node = containerRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !booted.current) {
+          booted.current = true
+          triggerSection(sectionId)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.35 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  return { replayKey, revealed, handleTypedDone }
+  const handleTypedDone = () => setRevealed(true)
+
+  return { token, revealed, handleTypedDone, containerRef }
 }

@@ -2,7 +2,10 @@ import { useState } from 'react'
 import avatar from '../assets/avatar.png'
 import { usePortfolioUI, type SectionId } from '../context/PortfolioUIContext'
 import { useLocale } from '../i18n/LocaleContext'
-import { triggerSection } from '../lib/bootStore'
+
+function scrollToSection(id: SectionId) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 
 const SECTIONS: { id: SectionId; navKey: 'whoami' | 'stack' | 'experience' | 'education' | 'projects' | 'connect' }[] = [
   { id: 'whoami', navKey: 'whoami' },
@@ -20,12 +23,12 @@ export function Nav() {
 
   const goHome = () => {
     setMenuOpen(false)
-    triggerSection('whoami', { scroll: true })
+    scrollToSection('whoami')
   }
 
   const goTo = (id: SectionId) => {
     setMenuOpen(false)
-    triggerSection(id, { scroll: true })
+    scrollToSection(id)
   }
 
   return (

@@ -34,7 +34,7 @@ function Segment({
       className={`relative flex h-7 items-center whitespace-nowrap px-3 text-[11px] font-semibold ${
         first ? 'rounded-l-full pl-4' : ''
       } ${last ? 'rounded-r-full pr-4' : ''}`}
-      style={{ background: bg, color: fg }}
+      style={{ background: bg, color: fg, zIndex: tail !== 'none' ? 2 : 1 }}
     >
       {tail === 'left' && (
         <span

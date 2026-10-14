@@ -14,7 +14,7 @@ export function Contact() {
     <section id="connect" className="mx-auto max-w-5xl px-5 py-8 pb-20">
       <SectionHeading index={6} title={c.title} />
       <Reveal>
-        <TerminalWindow title={c.title} active={activeSection === 'connect'}>
+        <TerminalWindow active={activeSection === 'connect'}>
           <CommandBlock sectionId="connect" path={c.path} command={c.command}>
             <p className="text-(--color-text-dim)"># {c.tagline}</p>
 

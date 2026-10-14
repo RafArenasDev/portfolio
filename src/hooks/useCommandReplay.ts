@@ -1,51 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
-import type { SectionId } from '../context/PortfolioUIContext'
-import { triggerSection, useBootToken } from '../lib/bootStore'
+import { usePortfolioUI, type SectionId } from '../context/PortfolioUIContext'
 
 /**
- * Drives one terminal's "boot sequence": its command retypes and its output
- * reveals either the first time it scrolls into view, or whenever nav
- * explicitly retriggers it — same behavior either way. Reads its token from
- * an external store (not React context) so one section's typing animation
- * never re-renders the other five.
+ * Drives one terminal's boot sequence, tied to whether it's the section
+ * currently in focus (per scrollspy): the command retypes and output
+ * streams in every time this section BECOMES the active one — by scroll or
+ * by nav click, no difference — and resets to fully blank the moment it's
+ * no longer active. Nothing persists once you scroll away.
  */
 export function useCommandReplay(sectionId: SectionId) {
-  const token = useBootToken(sectionId)
+  const { activeSection } = usePortfolioUI()
+  const isActive = activeSection === sectionId
+  const wasActive = useRef(false)
+  const [bootCount, setBootCount] = useState(0)
   const [revealed, setRevealed] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const booted = useRef(false)
-  // compare against the last-seen VALUE, not a one-shot boolean flag —
-  // StrictMode double-invokes mount effects, which breaks "have I run
-  // before" booleans but leaves value comparisons idempotent and safe
-  const prevToken = useRef(token)
 
   useEffect(() => {
-    if (token !== prevToken.current) {
-      prevToken.current = token
-      booted.current = true
+    if (isActive && !wasActive.current) {
+      wasActive.current = true
+      setRevealed(false)
+      setBootCount((c) => c + 1)
+    } else if (!isActive) {
+      wasActive.current = false
       setRevealed(false)
     }
-  }, [token])
-
-  useEffect(() => {
-    const node = containerRef.current
-    if (!node) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !booted.current) {
-          booted.current = true
-          triggerSection(sectionId)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.35 },
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isActive])
 
   const handleTypedDone = () => setRevealed(true)
 
-  return { token, revealed, handleTypedDone, containerRef }
+  return { bootToken: isActive ? bootCount : 0, revealed: isActive && revealed, handleTypedDone }
 }

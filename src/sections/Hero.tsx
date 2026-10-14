@@ -20,7 +20,7 @@ export function Hero() {
     <section id="whoami" className="mx-auto max-w-5xl px-5 pt-10 pb-8 sm:pt-16">
       <SectionHeading index={1} title={h.title} />
       <Reveal>
-        <TerminalWindow title={h.title} active={activeSection === 'whoami'}>
+        <TerminalWindow active={activeSection === 'whoami'}>
           <CommandBlock sectionId="whoami" path={h.path} command={h.command}>
             <div className="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-[auto_1fr]">
               <BitPortrait className="mx-auto w-[260px] sm:mx-0 sm:w-[300px]" />

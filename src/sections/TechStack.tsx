@@ -1,4 +1,5 @@
 import { CommandBlock } from '../components/CommandBlock'
+import { FolderIcon, techIconUrl } from '../components/FolderIcon'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
@@ -18,8 +19,9 @@ function FolderGroup({
 
   return (
     <div className="whitespace-pre">
-      <p>
+      <p className="flex items-center gap-1.5">
         <span className="text-(--color-text-faint)">{folderBranch}</span>
+        <FolderIcon className="h-4 w-4 shrink-0" />
         <span className="font-bold text-(--color-accent-strong)">{group.folder}</span>
       </p>
       {group.files.map((file, i) => {
@@ -30,13 +32,7 @@ function FolderGroup({
               {folderGuide}
               {isLastFile ? '└── ' : '├── '}
             </span>
-            {file.icon && (
-              <img
-                src={`https://skillicons.dev/icons?i=${file.icon}&theme=dark`}
-                alt=""
-                className="h-4 w-4 shrink-0"
-              />
-            )}
+            {file.icon && <img src={techIconUrl(file.icon)} alt="" className="h-4 w-4 shrink-0" />}
             <span className="text-(--color-text)">{file.name}</span>
           </p>
         )
@@ -54,7 +50,7 @@ export function TechStack() {
     <section id="stack" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={2} title={s.title} />
       <Reveal>
-        <TerminalWindow title={s.title} active={activeSection === 'stack'}>
+        <TerminalWindow active={activeSection === 'stack'}>
           <CommandBlock sectionId="stack" path={s.path} command={s.command}>
             <p className="text-(--color-text)">tech-stack/</p>
             {s.groups.map((group, i) => (

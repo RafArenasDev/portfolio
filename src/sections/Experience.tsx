@@ -14,7 +14,7 @@ export function Experience() {
     <section id="experience" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={3} title={e.title} />
       <Reveal>
-        <TerminalWindow title={e.title} active={activeSection === 'experience'}>
+        <TerminalWindow active={activeSection === 'experience'}>
           <CommandBlock sectionId="experience" path={e.path} command={e.command}>
             <div className="space-y-5">
               {e.jobs.map((job, i) => (

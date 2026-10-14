@@ -11,13 +11,13 @@ interface CommandBlockProps {
   children: ReactNode
 }
 
-/** A prompt line that retypes its command on first scroll-into-view (or on nav replay); output streams in line by line once it finishes — nothing shown beforehand. */
+/** A prompt line that retypes every time this section becomes the active one; output streams in line by line once it finishes, and the whole thing goes blank again the moment focus leaves. */
 export function CommandBlock({ sectionId, path, command, children }: CommandBlockProps) {
-  const { token, revealed, handleTypedDone, containerRef } = useCommandReplay(sectionId)
+  const { bootToken, revealed, handleTypedDone } = useCommandReplay(sectionId)
 
   return (
-    <div ref={containerRef}>
-      <PromptLine path={path} command={command} bootToken={token} onTypedDone={handleTypedDone} />
+    <div>
+      <PromptLine path={path} command={command} bootToken={bootToken} onTypedDone={handleTypedDone} />
       {revealed && <StreamLines>{children}</StreamLines>}
     </div>
   )

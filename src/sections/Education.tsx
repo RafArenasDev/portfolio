@@ -14,7 +14,7 @@ export function Education() {
     <section id="education" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={4} title={e.title} />
       <Reveal>
-        <TerminalWindow title={e.title} active={activeSection === 'education'}>
+        <TerminalWindow active={activeSection === 'education'}>
           <CommandBlock sectionId="education" path={e.path} command={e.command}>
             <p className="text-(--color-accent-strong)">{e.academicTitle}</p>
             <div className="mt-1.5 space-y-2.5 pl-4">

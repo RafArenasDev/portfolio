@@ -1,4 +1,5 @@
 import { CommandBlock } from '../components/CommandBlock'
+import { FolderIcon } from '../components/FolderIcon'
 import { Reveal } from '../components/Reveal'
 import { SectionHeading } from '../components/SectionHeading'
 import { TerminalWindow } from '../components/TerminalWindow'
@@ -23,8 +24,9 @@ function ProjectNode({
 
   return (
     <div className="whitespace-pre">
-      <p>
+      <p className="flex items-center gap-1.5">
         <span className="text-(--color-text-faint)">{branch}</span>
+        <FolderIcon className="h-4 w-4 shrink-0" />
         <span className="font-bold text-(--color-accent-strong)">{project.name}/</span>
       </p>
       <p className="text-[12px] text-(--color-text-dim)">
@@ -60,7 +62,7 @@ export function Projects() {
     <section id="projects" className="mx-auto max-w-5xl px-5 py-8">
       <SectionHeading index={5} title={p.title} />
       <Reveal>
-        <TerminalWindow title={p.title} active={activeSection === 'projects'}>
+        <TerminalWindow active={activeSection === 'projects'}>
           <CommandBlock sectionId="projects" path={p.path} command={p.command}>
             <p className="text-(--color-text)">projects/</p>
             {p.items.map((project, i) => (
